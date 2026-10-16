@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# MediGuard
 
-# Run and deploy your AI Studio app
+MediGuard is a medicine-management and reminder app. It helps a person keep
+all their medicines in one place and reminds them when to take each one.
 
-This contains everything you need to run your app locally.
+## The problem
+Many people, especially elderly patients and people on long-term treatment,
+forget doses or lose track of which medicine to take and when. MediGuard aims
+to make this simple by [one line: who the app is for, e.g. patients, families].
 
-View your app in AI Studio: https://ai.studio/apps/e122aaff-4c52-4fdb-bc21-f207b75e4c85
+## What the app does
+- Lets the user add a medicine with its name, dose and timing [edit to match]
+- Sends a reminder when it is time to take the medicine [only if this works]
+- [another feature that works today]
 
-## Run Locally
+## How it works
+1. The user [first step, e.g. creates an account or opens the app]
+2. The user [second step, e.g. adds their medicines and times]
+3. The app [third step, e.g. sends a reminder at the set time]
 
-**Prerequisites:**  Node.js
+## Current status
+In development. Working: [list]. Still being built: [list].
 
+## Tech used
+[language, framework, database, notification method]
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Important note
+MediGuard is a reminder and organizing tool. It does not diagnose illness
+or give medical advice. Always follow your doctor's instructions.
+
+## Built with AI assistance
+Parts of this project were built with AI tools (ChatGPT, Claude, GitHub
+Copilot). I am learning by reading, testing and modifying the code.
