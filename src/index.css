@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "system-ui", sans-serif;
+  
+  --color-teal: #16A37F;
+  --color-teal-dark: #0F6E56;
+  --color-teal-light: #E1F5EE;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+}
+
+:root {
+  --bg: #F0FDF9;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --text: #0F172A;
+  --muted: #64748B;
+  --border: #E2E8F0;
+  --input-bg: #ffffff;
+  --nav-bg: #ffffff;
+  --section-bg: #f8fafc;
+  --toast-bg: #0F6E56;
+}
+
+.dark {
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --card: #1E293B;
+  --text: #F1F5F9;
+  --muted: #94A3B8;
+  --border: #334155;
+  --input-bg: #0F172A;
+  --nav-bg: #1E293B;
+  --section-bg: #0a1120;
+  --toast-bg: #16A37F;
+}
+
+.fs-normal {
+  --fxs: 11px; --fsm: 13px; --fbase: 15px; --fmd: 16px; --flg: 18px; --fxl: 20px; --f2x: 22px; --f3x: 26px;
+}
+.fs-large {
+  --fxs: 12px; --fsm: 14px; --fbase: 16px; --fmd: 17px; --flg: 20px; --fxl: 22px; --f2x: 24px; --f3x: 28px;
+}
+.fs-xlarge {
+  --fxs: 13px; --fsm: 16px; --fbase: 18px; --fmd: 20px; --flg: 22px; --fxl: 26px; --f2x: 28px; --f3x: 32px;
+}
+
+@layer base {
+  body {
+    @apply bg-[color:var(--bg)] text-[color:var(--text)] transition-colors duration-200 antialiased;
+    font-size: var(--fbase);
+  }
+}
+
+@layer components {
+  .phone-container {
+    @apply w-full max-w-[375px] h-[780px] mx-auto bg-[color:var(--surface)] rounded-[44px] border-8 border-[#1E293B] shadow-2xl overflow-hidden flex flex-col relative;
+  }
+  
+  .btn-primary {
+    @apply bg-teal text-white rounded-[14px] p-4 text-[length:var(--flg)] font-bold flex items-center justify-center gap-2 transition-opacity active:opacity-80 disabled:opacity-50;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-2 border-teal text-teal rounded-[14px] p-3 text-[length:var(--fmd)] font-semibold transition-opacity active:opacity-80;
+  }
+  
+  .input-field {
+    @apply w-full border-2 border-[color:var(--border)] rounded-xl py-3 px-4 text-[length:var(--flg)] text-[color:var(--text)] bg-[color:var(--input-bg)] outline-none focus:border-teal transition-all;
+  }
+  
+  .label-text {
+    @apply block text-[length:var(--fsm)] font-bold text-[color:var(--text)] mb-1.5 mt-4;
+  }
+}
+

@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Master Gate: Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    // User Profiles
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) 
+        && incoming().uid == userId 
+        && incoming().keys().hasAll(['uid', 'phone', 'settings', 'onboarding']) 
+        && incoming().settings.darkMode is bool;
+      allow update: if isOwner(userId)
+        && incoming().uid == existing().uid
+        && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'email', 'photoURL', 'settings', 'onboarding', 'streak']);
+    }
+
+    // Medicines
+    match /medicines/{medicineId} {
+      allow list: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow get: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create: if isSignedIn() 
+        && incoming().uid == request.auth.uid 
+        && incoming().name is string && incoming().name.size() <= 100;
+      allow update: if isSignedIn() && existing().uid == request.auth.uid
+        && incoming().uid == existing().uid
+        && (
+          // Action: Mark Taken/Missed
+          incoming().diff(existing()).affectedKeys().hasOnly(['dailyStatus', 'lastTakenAt']) ||
+          // Action: Snooze
+          incoming().diff(existing()).affectedKeys().hasOnly(['snoozeUntil']) ||
+          // Action: Edit Med
+          incoming().diff(existing()).affectedKeys().hasOnly(['name', 'dosage', 'unit', 'reminderTimes', 'frequency', 'missedAction', 'notes'])
+        );
+      allow delete: if isSignedIn() && existing().uid == request.auth.uid;
+    }
+
+    // Family Contacts
+    match /family/{contactId} {
+      allow list: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create: if isSignedIn() && incoming().uid == request.auth.uid;
+      allow update, delete: if isSignedIn() && existing().uid == request.auth.uid;
+    }
+
+    // History
+    match /history/{historyId} {
+      allow list: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create: if isSignedIn() && incoming().uid == request.auth.uid;
+    }
+
+    // Adherence Stats
+    match /adherence/{adherenceId} {
+      allow list, get: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create, update: if isSignedIn() && incoming().uid == request.auth.uid;
+    }
+  }
+}

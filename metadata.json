@@ -1,0 +1,6 @@
+{
+  "name": "MediGuard",
+  "description": "Production-ready medication reminder app with Firebase integration, modular architecture, and mobile-ready PWA support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

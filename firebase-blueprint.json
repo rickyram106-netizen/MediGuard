@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User account and personalized settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "phone": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "settings": { "type": "object" },
+        "onboarding": { "type": "object" },
+        "streak": { "type": "integer" }
+      },
+      "required": ["uid", "phone"]
+    },
+    "Medicine": {
+      "title": "Medicine",
+      "description": "Medication details and schedule",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "dosage": { "type": "string" },
+        "unit": { "type": "string" },
+        "reminderTimes": { "type": "array" },
+        "frequency": { "type": "string" },
+        "dailyStatus": { "type": "object" }
+      },
+      "required": ["uid", "name", "reminderTimes"]
+    },
+    "FamilyContact": {
+      "title": "Family Contact",
+      "description": "Emergency contacts for medication alerts",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "alertLevel": { "type": "integer" }
+      }
+    },
+    "HistoryEntry": {
+      "title": "History Entry",
+      "description": "Logging of taken or missed doses",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "medicineId": { "type": "string" },
+        "status": { "type": "string" },
+        "date": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Individual user data and settings"
+    },
+    "medicines/{medicineId}": {
+      "schema": "Medicine",
+      "description": "Medication schedule per user"
+    },
+    "family/{contactId}": {
+      "schema": "FamilyContact",
+      "description": "Contacts to notify for missed doses"
+    },
+    "history/{historyId}": {
+      "schema": "HistoryEntry",
+      "description": "Log of medication adherence"
+    },
+    "adherence/{adherenceId}": {
+      "schema": "object",
+      "description": "Daily calculated adherence stats"
+    }
+  }
+}

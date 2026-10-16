@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "@tailwindcss/stylelint"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null
+  }
+}
